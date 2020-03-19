@@ -4,10 +4,7 @@
 
 <div class="content" role="main">
 
-  <form [formGroup]="getWetherForm" (ngSubmit)="onGetWether(getWetherForm.value)">
-    <input formControlName="city" placeholder="Хочу узнать погоду в...">
-    <button type="submit">Узнать</button>
-  </form>
+  <app-request-form (onSubmitForm)="getWeather($event)"></app-request-form>
 
   <footer>
   </footer>

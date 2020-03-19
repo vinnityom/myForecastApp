@@ -1,0 +1,4 @@
+<form [formGroup]="getWeatherForm" (ngSubmit)="handleSublit(getWeatherForm.value)">
+  <input formControlName="city" placeholder="Хочу узнать погоду в...">
+  <button type="submit">Узнать</button>
+</form>
