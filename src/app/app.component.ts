@@ -11,6 +11,7 @@ export class AppComponent {
   title = 'my-forecast-app';
 
   public getWeatherForm: FormGroup;
+  public days: Array<any> = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,9 +23,12 @@ export class AppComponent {
   }
   
   public async getWeather(formValue: { city: string }): Promise<void> {
+    this.days = [];
+    
     try {
       const response = await this.getWeatherService.getWhether(formValue.city);
       console.log(response);
+      this.days = response.list;
     } catch(error) {
       console.log(error);
     }

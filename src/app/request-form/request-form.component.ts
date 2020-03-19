@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-request-form',
+  selector: 'request-form',
   templateUrl: './request-form.component.html',
   styleUrls: ['./request-form.component.css']
 })

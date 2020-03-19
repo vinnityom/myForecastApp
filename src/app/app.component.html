@@ -4,7 +4,9 @@
 
 <div class="content" role="main">
 
-  <app-request-form (onSubmitForm)="getWeather($event)"></app-request-form>
+  <request-form (onSubmitForm)="getWeather($event)"></request-form>
+
+  <weather-list *ngIf="!!days.length" [days]="days"></weather-list>
 
   <footer>
   </footer>

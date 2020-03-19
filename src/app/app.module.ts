@@ -7,11 +7,15 @@ import { AppComponent } from './app.component';
 import { GetWeatherInterceptor } from './get-weather.interceptor';
 import { GetWeatherService } from './get-weather.service';
 import { RequestFormComponent } from './request-form/request-form.component';
+import { WeatherListComponent } from './weather-list/weather-list.component';
+import { WeatherListItemComponent } from './weather-list-item/weather-list-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RequestFormComponent,
+    WeatherListComponent,
+    WeatherListItemComponent,
   ],
   imports: [
     BrowserModule,
