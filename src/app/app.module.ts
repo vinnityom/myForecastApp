@@ -10,6 +10,7 @@ import { RequestFormComponent } from './request-form/request-form.component';
 import { WeatherListComponent } from './weather-list/weather-list.component';
 import { WeatherListItemComponent } from './weather-list-item/weather-list-item.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule.forRoot([]),
   ],
   providers: [
     GetWeatherService,

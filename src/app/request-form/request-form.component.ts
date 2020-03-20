@@ -1,5 +1,7 @@
 import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'request-form',
@@ -8,6 +10,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class RequestFormComponent implements OnInit {
   @Input('isSearchRunning') isSearchRunning: boolean;
+  @Input('querySubscription') querySubscription: Subscription;
+  @Input('searchParams') searchParams: Observable<any>;
+
   @Output() onSubmitForm = new EventEmitter();
   
   public getWeatherForm: FormGroup;
@@ -18,11 +23,19 @@ export class RequestFormComponent implements OnInit {
   ) {
     this.getWeatherForm = formBuilder.group({
       city: '',
-    })
+    });
   }
 
   ngOnInit(): void {
     this.checkSearchButtonState();
+
+    const childQuerySubscription = this.searchParams.subscribe(({ city }) => {
+      if (!!city) {
+        this.getWeatherForm.patchValue({ city });
+      }
+    });
+
+    this.querySubscription.add(childQuerySubscription);
   }
 
   private checkSearchButtonState(): void {
@@ -32,7 +45,7 @@ export class RequestFormComponent implements OnInit {
     this.isSearchButtonDisabled = this.isSearchRunning || !isFormFilled;
   }
 
-  public handleSublit(event: { city: string }): void {
+  public handleSubmit(event: { city: string }): void {
     this.onSubmitForm.emit(event);
   }
 }
