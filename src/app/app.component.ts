@@ -12,6 +12,7 @@ export class AppComponent {
 
   public getWeatherForm: FormGroup;
   public days: Array<any> = [];
+  public isSearchFailed: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,13 +25,17 @@ export class AppComponent {
   
   public async getWeather(formValue: { city: string }): Promise<void> {
     this.days = [];
-    
+    this.isSearchFailed = false;
+
     try {
-      const response = await this.getWeatherService.getWhether(formValue.city);
-      console.log(response);
-      this.days = response.list;
+      const days = await this.getWeatherService.getWhether(formValue.city);
+      this.days = days;
     } catch(error) {
-      console.log(error);
+      const notFoundCode = 404;
+      
+      if (error.cod = notFoundCode) {
+        this.isSearchFailed = true;
+      }
     }
   }
 }

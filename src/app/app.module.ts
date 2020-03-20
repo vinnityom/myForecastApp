@@ -9,6 +9,7 @@ import { GetWeatherService } from './get-weather.service';
 import { RequestFormComponent } from './request-form/request-form.component';
 import { WeatherListComponent } from './weather-list/weather-list.component';
 import { WeatherListItemComponent } from './weather-list-item/weather-list-item.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { WeatherListItemComponent } from './weather-list-item/weather-list-item.
     RequestFormComponent,
     WeatherListComponent,
     WeatherListItemComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,4 +10,8 @@ export class WeatherListComponent {
 
   constructor() { }
 
+  ngOnInit() {
+    console.log('DAYZZ: ', this.days);
+  }
+
 }

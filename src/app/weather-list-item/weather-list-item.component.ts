@@ -10,20 +10,17 @@ export class WeatherListItemComponent {
   @Input('day') day: any;
 
   public date: any;
-  public dayTemp: number;
-  public nightTemp: number;
-  public description: string;
+  public temperature: number;
+  public feelsLike: number;
 
   constructor() {
   }
 
   ngOnInit(): void {
-    this.date = moment(new Date(this.day.dt)).format('DD.MM');
+    this.date = moment(new Date(this.day.dt_txt)).format('DD.MM');
 
-    const { day, night } = this.day.temp;
-    this.dayTemp = day;
-    this.nightTemp = night;
-
-    this.description = this.day.weather[0].description;
+    const { temp, feels_like } = this.day.main;
+    this.temperature = temp;
+    this.feelsLike = feels_like;
   }
 }

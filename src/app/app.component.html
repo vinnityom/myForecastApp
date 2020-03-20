@@ -8,6 +8,8 @@
 
   <weather-list *ngIf="!!days.length" [days]="days"></weather-list>
 
+  <not-found *ngIf="isSearchFailed"></not-found>
+
   <footer>
   </footer>
 
