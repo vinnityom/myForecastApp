@@ -20,8 +20,8 @@ export class GetWeatherService {
   
       return this.http.post(url, null, { params }).subscribe(
         (response: any) => {
-          const intervalsInAday = 8;
-          const fiveDays = response.list.filter((item, index) => index % intervalsInAday === 0);
+          const intervalsInADay = 8;
+          const fiveDays = response.list.filter((item, index) => index % intervalsInADay === 0);
           
           resolve(fiveDays);
         },
