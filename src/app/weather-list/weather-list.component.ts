@@ -22,13 +22,13 @@ export class WeatherListComponent {
   private sortByDate(direction: string): void {
     const compareFn = this.getCompareFn(direction);
 
-    this.days = this.days.slice().sort((a, b) => compareFn(new Date(a.dt_txt), new Date(b.dt_txt)));
+    this.days = this.days.slice().sort((a, b) => compareFn(a.date, b.date));
   }
 
   private sortByTemperature(direction: string): void {
     const compareFn = this.getCompareFn(direction);
 
-    this.days = this.days.slice().sort((a, b) => compareFn(a.main.temp, b.main.temp));    
+    this.days = this.days.slice().sort((a, b) => compareFn(a.temperature, b.temperature));    
   }
 
   private getCompareFn(direction: string): (a: any, b: any) => number {

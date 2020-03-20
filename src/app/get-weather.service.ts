@@ -20,15 +20,31 @@ export class GetWeatherService {
   
       return this.http.post(url, null, { params }).subscribe(
         (response: any) => {
-          const intervalsInADay = 8;
-          const fiveDays = response.list.filter((item, index) => index % intervalsInADay === 0);
+          const processedResponse = this.processResponse(response);
           
-          resolve(fiveDays);
+          resolve(processedResponse);
         },
         (response: any) => {
           reject(response.error);
         }
       );
     })
+  }
+
+  private processResponse(response: any): any {
+    const intervalsInADay = 8;
+    const fiveDays = response.list.filter((item, index) => index % intervalsInADay === 0);
+
+    const days = fiveDays.map((unprocessedDay: any) => {
+      const { dt_txt, main: { temp, feels_like } } = unprocessedDay;
+      
+      return {
+        date: new Date(dt_txt),
+        temperature: temp,
+        feelsLike: feels_like,
+      }
+    });
+
+    return days;
   }
 }
