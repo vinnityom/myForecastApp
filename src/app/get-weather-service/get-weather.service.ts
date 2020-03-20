@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Day } from '../day';
 
 @Injectable({
@@ -19,12 +19,12 @@ export class GetWeatherService {
       const url = 'https://api.openweathermap.org/data/2.5/forecast?'
   
       return this.http.post(url, null, { params }).subscribe(
-        (response: any) => {
+        (response: HttpResponse<unknown>) => {
           const processedResponse = this.processResponse(response);
           
           resolve(processedResponse);
         },
-        (response: any) => {
+        (response: HttpErrorResponse) => {
           const processedError = this.processError(response);
 
           reject(processedError);
