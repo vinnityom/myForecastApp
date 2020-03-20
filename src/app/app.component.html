@@ -11,7 +11,7 @@
     [searchParams]="searchParams"
   ></request-form>
 
-  <weather-list *ngIf="!!days.length" [days]="days"></weather-list>
+  <weather-list *ngIf="isSearchResult" [days]="days"></weather-list>
 
   <not-found *ngIf="isSearchFailed"></not-found>
 

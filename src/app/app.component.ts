@@ -15,9 +15,10 @@ export class AppComponent {
   public days: Array<Day> = [];
   public isSearchRunning: boolean = false;
   public isSearchFailed: boolean;
+  public isSearchResult: boolean = false;
   public querySubscription: Subscription;
 
-  private searchParams: Observable<any> = this.route.queryParams;
+  public searchParams: Observable<any> = this.route.queryParams;
 
   constructor(
     private getWeatherService: GetWeatherService,
@@ -55,12 +56,11 @@ export class AppComponent {
   }
   
   public async getWeather(city: string): Promise<void> {
-    this.days = [];
-    this.isSearchFailed = false;
-    this.isSearchRunning = true;
+    this.resetState();
     
     try {
       const days = await this.getWeatherService.getWhether(city);
+      this.isSearchResult = true;
       this.days = days;
     } catch(error) {
       const notFoundCode = 404;
@@ -71,5 +71,12 @@ export class AppComponent {
     }
 
     this.isSearchRunning = false;
+  }
+
+  private resetState(): void {
+    this.days = [];
+    this.isSearchFailed = false;
+    this.isSearchResult = false;
+    this.isSearchRunning = true;
   }
 }
