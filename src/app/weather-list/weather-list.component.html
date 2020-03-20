@@ -1,3 +1,16 @@
-<ul>
+<table>
+    <tr>
+        <td>
+            Дата
+            <button (click)="sort('date', 'forward')">&darr;</button>
+            <button (click)="sort('date', 'backwards')">&uarr;</button>
+        </td>
+        
+        <td>
+            Температура
+            <button (click)="sort('temperature', 'forward')">&darr;</button>
+            <button (click)="sort('temperature', 'backwards')">&uarr;</button>
+        </td>
+    </tr>
     <weather-list-item *ngFor="let day of days" [day]="day"></weather-list-item>
-</ul>
+</table>
