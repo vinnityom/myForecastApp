@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GetWeatherInterceptor } from './get-weather.interceptor';
+import { Day } from '../day';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class GetWeatherService {
     private http: HttpClient,
   ) {}
 
-  public getWhether(city: string): Promise<any> {
+  public getWhether(city: string): Promise<Day[]> {
     return new Promise((resolve, reject) => {
       const numberOfIntervals = '40';
   
@@ -25,13 +25,15 @@ export class GetWeatherService {
           resolve(processedResponse);
         },
         (response: any) => {
-          reject(response.error);
+          const processedError = this.processError(response);
+
+          reject(processedError);
         }
       );
     })
   }
 
-  private processResponse(response: any): any {
+  private processResponse(response: any): Array<Day> {
     const intervalsInADay = 8;
     const fiveDays = response.list.filter((item, index) => index % intervalsInADay === 0);
 
@@ -46,5 +48,11 @@ export class GetWeatherService {
     });
 
     return days;
+  }
+
+  private processError(response: any): { code: string, message: string } {
+    const { cod, message } = response;
+
+    return { code: cod, message};
   }
 }

@@ -22,21 +22,6 @@ export class GetWeatherInterceptor implements HttpInterceptor {
       params: request.params.set('appid', APP_ID)
     });
 
-    return next.handle(whetherRequest).pipe(
-      tap(
-        event => {
-          if (event instanceof HttpResponse) {
-            console.log('Server response: ', event);
-          }
-        },
-        error => {
-          if (error instanceof HttpErrorResponse) {
-            if (error.status == 401) {
-              console.log('Error: ', error);
-            }
-          }
-        }
-      )
-    )
+    return next.handle(whetherRequest);
   }
 }

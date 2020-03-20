@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { GetWeatherService } from './get-weather.service';
+import { GetWeatherService } from './get-weather-service/get-weather.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { Day } from './day';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { Observable, Subscription } from 'rxjs';
 export class AppComponent {
   title = 'my-forecast-app';
 
-  public days: Array<any> = [];
+  public days: Array<Day> = [];
   public isSearchRunning: boolean = false;
   public isSearchFailed: boolean;
   public querySubscription: Subscription;
@@ -46,7 +47,7 @@ export class AppComponent {
     this.updateSearch({ city });
   }
 
-  private updateSearch(params: Partial<any>): void {
+  private updateSearch(params: { city: string }): void {
     this.router.navigate(['.'], {
       queryParams: params, 
       queryParamsHandling: 'merge'
@@ -64,7 +65,7 @@ export class AppComponent {
     } catch(error) {
       const notFoundCode = 404;
       
-      if (error.cod = notFoundCode) {
+      if (error.code = notFoundCode) {
         this.isSearchFailed = true;
       }
     }

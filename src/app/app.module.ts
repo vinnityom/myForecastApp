@@ -4,8 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { GetWeatherInterceptor } from './get-weather.interceptor';
-import { GetWeatherService } from './get-weather.service';
+import { GetWeatherInterceptor } from './get-weather-service/get-weather.interceptor';
+import { GetWeatherService } from './get-weather-service/get-weather.service';
 import { RequestFormComponent } from './request-form/request-form.component';
 import { WeatherListComponent } from './weather-list/weather-list.component';
 import { WeatherListItemComponent } from './weather-list-item/weather-list-item.component';
