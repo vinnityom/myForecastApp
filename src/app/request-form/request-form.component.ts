@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,10 +6,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './request-form.component.html',
   styleUrls: ['./request-form.component.css']
 })
-export class RequestFormComponent {
+export class RequestFormComponent implements OnInit {
+  @Input('isSearchRunning') isSearchRunning: boolean;
   @Output() onSubmitForm = new EventEmitter();
   
   public getWeatherForm: FormGroup;
+  public isSearchButtonDisabled: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -17,6 +19,17 @@ export class RequestFormComponent {
     this.getWeatherForm = formBuilder.group({
       city: '',
     })
+  }
+
+  ngOnInit(): void {
+    this.checkSearchButtonState();
+  }
+
+  private checkSearchButtonState(): void {
+    const cityControlValue = this.getWeatherForm.value.city;
+    const isFormFilled = cityControlValue && cityControlValue.length;
+
+    this.isSearchButtonDisabled = this.isSearchRunning || !isFormFilled;
   }
 
   public handleSublit(event: { city: string }): void {

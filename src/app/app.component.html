@@ -4,7 +4,7 @@
 
 <div class="content" role="main">
 
-  <request-form (onSubmitForm)="getWeather($event)"></request-form>
+  <request-form (onSubmitForm)="getWeather($event)" [isSearchRunning]="isSearchRunning"></request-form>
 
   <weather-list *ngIf="!!days.length" [days]="days"></weather-list>
 
