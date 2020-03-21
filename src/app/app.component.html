@@ -11,9 +11,7 @@
     [searchParams]="searchParams"
   ></request-form>
 
-  <weather-list *ngIf="isSearchResult" [days]="days"></weather-list>
-
-  <not-found *ngIf="isSearchFailed"></not-found>
+  <ng-template appSearchResult></ng-template>
 
   <footer>
   </footer>

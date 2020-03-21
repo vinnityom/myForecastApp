@@ -11,6 +11,7 @@ import { WeatherListComponent } from './weather-list/weather-list.component';
 import { WeatherListItemComponent } from './weather-list-item/weather-list-item.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RouterModule } from '@angular/router';
+import { SearchResultDirective } from './search-result.directive';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { RouterModule } from '@angular/router';
     WeatherListComponent,
     WeatherListItemComponent,
     NotFoundComponent,
+    SearchResultDirective,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
 import { GetWeatherService } from './get-weather-service/get-weather.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { WeatherListComponent } from './weather-list/weather-list.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { Day } from './day';
+import { SearchResultDirective } from './search-result.directive';
 
 @Component({
   selector: 'app-root',
@@ -10,26 +13,32 @@ import { Day } from './day';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  @ViewChild(SearchResultDirective, { static: true }) searchResult: SearchResultDirective;
+  
   title = 'my-forecast-app';
-
-  public days: Array<Day> = [];
+  
   public isSearchRunning: boolean = false;
-  public isSearchFailed: boolean;
-  public isSearchResult: boolean = false;
   public querySubscription: Subscription;
 
   public searchParams: Observable<any> = this.route.queryParams;
+
+  private searchResultViewContainerRef: ViewContainerRef;
 
   constructor(
     private getWeatherService: GetWeatherService,
     private route: ActivatedRoute,
     private router: Router,
+    private componentFactoryResolver: ComponentFactoryResolver,
   ) {
     this.querySubscription = this.searchParams.subscribe((queryParams) => {
       if (!!queryParams.city) {
         this.searchByParametersFromQuery(queryParams);
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.searchResultViewContainerRef = this.searchResult.viewContainerRef;
   }
 
   ngOnDestroy(): void {
@@ -52,31 +61,38 @@ export class AppComponent {
     this.router.navigate(['.'], {
       queryParams: params, 
       queryParamsHandling: 'merge'
-    })
+    });
   }
   
   public async getWeather(city: string): Promise<void> {
-    this.resetState();
+    this.searchResultViewContainerRef.clear();
     
     try {
       const days = await this.getWeatherService.getWhether(city);
-      this.isSearchResult = true;
-      this.days = days;
+      
+      this.embedWeatherListComponent(days);
     } catch(error) {
       const notFoundCode = 404;
       
       if (error.code = notFoundCode) {
-        this.isSearchFailed = true;
+        this.embedNotFoundComponent();
       }
     }
 
     this.isSearchRunning = false;
   }
 
-  private resetState(): void {
-    this.days = [];
-    this.isSearchFailed = false;
-    this.isSearchResult = false;
-    this.isSearchRunning = true;
+  private embedWeatherListComponent(days: Day[]): void {
+    this.searchResultViewContainerRef = this.searchResult.viewContainerRef;
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(WeatherListComponent);
+    
+    const componentRef = this.searchResultViewContainerRef.createComponent(componentFactory);
+    (<WeatherListComponent>componentRef.instance).days = days;
+  }
+
+  private embedNotFoundComponent(): void {
+    this.searchResultViewContainerRef = this.searchResult.viewContainerRef;
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(NotFoundComponent);
+    this.searchResultViewContainerRef.createComponent(componentFactory);
   }
 }
